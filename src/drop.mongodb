@@ -1,0 +1,3 @@
+use('e-comerse')
+
+db.dropDatabase("users")

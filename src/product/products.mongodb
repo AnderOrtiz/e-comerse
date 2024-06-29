@@ -1,0 +1,35 @@
+use('e-comerse')
+
+db.createCollection('products', {
+    validator: {
+        $jsonSchema: {
+            bsonType: 'object',
+            required: ['email', 'password'],
+            properties:{
+                name: {
+                    bsonType: 'string'
+                },
+                last_name: {
+                    bsonType: 'string'
+                },
+                email: {
+                    bsonType: 'string',
+                    pattern: "@mongodb\\.com$",
+                },
+                password: {
+                    bsonType: 'string',
+                    pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})',
+                    //pattern: '^[A-Za-z0-9]{8,}$'
+                },
+                gender: {
+                    enum: [ "F", "M", "Male", "Female", "f", "m" ],
+                },
+                age: {
+                    bsonType: 'number',
+                    minimum: 18,
+                    maximum: 99
+                }
+            }
+        }
+    }
+})
