@@ -1,0 +1,11 @@
+use('e-comerse')
+
+db.users.insertOne({
+    name:'Anderson',
+    last_name:'Ortiz',
+    email:'ander@gmail.com',
+    password: '12345678',
+    gender: 'Male',
+    age: 18
+})
+

@@ -1,0 +1,26 @@
+use('e-comerse')
+
+db.products.drop()
+
+db.createCollection('products', {
+    validator: {
+        $jsonSchema: {
+            bsonType: 'object',
+            required: ['name', 'price'],
+            properties:{
+                name: {
+                    bsonType: 'string'
+                },
+                price: {
+                    bsonType: 'double',
+                },
+                detail: {
+                    bsonType: 'string'
+                },
+                car: {
+                    bsonType: 'bool',
+                }
+            }
+        }
+    }
+})

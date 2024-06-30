@@ -1,3 +1,5 @@
 use('e-comerse')
 
-db.dropDatabase("users")
+db.users.drop()
+
+db.products.drop()

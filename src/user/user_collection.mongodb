@@ -1,5 +1,7 @@
 use('e-comerse')
 
+db.users.drop()
+
 db.createCollection('users', {
     validator: {
         $jsonSchema: {
@@ -14,15 +16,15 @@ db.createCollection('users', {
                 },
                 email: {
                     bsonType: 'string',
-                    pattern: "@mongodb\\.com$",
+                    pattern: '@gmail\\.com$'
                 },
                 password: {
                     bsonType: 'string',
-                    pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})',
-                    //pattern: '^[A-Za-z0-9]{8,}$'
+                    //pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})'
+                    pattern: '^[A-Za-z0-9]{8,}$'
                 },
                 gender: {
-                    enum: [ "F", "M", "Male", "Female", "f", "m" ],
+                    enum: [ 'F', 'M', 'Male', 'Female']
                 },
                 age: {
                     bsonType: 'number',
