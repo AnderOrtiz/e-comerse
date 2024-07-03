@@ -1,4 +1,4 @@
-src/product/products_collection.mongodbuse('e-comerse')
+use('e-comerse')
 
 db.products.drop()
 

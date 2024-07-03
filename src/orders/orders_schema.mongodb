@@ -1,24 +1,42 @@
-src/product/products_collection.mongodbuse('e-comerse')
+use('e-comerse')
 
-db.products.drop()
+db.orders.drop()
 
-db.createCollection('products', {
+db.createCollection('orders', {
     validator: {
         $jsonSchema: {
             bsonType: 'object',
-            required: ['name', 'price'],
+            required: ['user', 'product'],
             properties:{
-                name: {
-                    bsonType: 'string'
+                user: {
+                    bsonType: 'object',
+                    required: ['name'],
+                    properties: {
+                        id_user:{
+                            bsonType: 'string'
+                        },
+                        name: {
+                            bsonType: 'string'
+                        }
+                    }
                 },
-                price: {
-                    bsonType: 'double',
-                },
-                detail: {
-                    bsonType: 'string'
-                },
-                car: {
-                    bsonType: 'bool',
+                product: {
+                    bsonType: 'object',
+                    required: ['name'],
+                    properties: {
+                        id_product:{
+                            bsonType: 'string'
+                        },
+                        name: {
+                            bsonType: 'string'
+                        },
+                        price: {
+                            bsonType: 'double'
+                        },
+                        cantidad: {
+                            bsonType: 'int'
+                        }
+                    }
                 }
             }
         }
