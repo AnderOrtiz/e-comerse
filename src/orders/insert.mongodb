@@ -1,14 +1,10 @@
-use('e-comerse')
+use('e_comerse')
 
 db.orders.insertOne({
-    user:{
-        id_user:'6680b50d6bcb2db7948c3744',
-        name:'Anderson'
-    },
-    product: {
-        id_product :'6685d4697286fc210c237d94',
-        name:'Wallet',
-        price: Double(23.00),
-        cantidad: 3
-    }
+
+    id_user:ObjectId('6687323fff9767608208e980'),
+
+    id_products : [
+        ObjectId('66873289ce5e898f8f3c0517')
+    ]
 })

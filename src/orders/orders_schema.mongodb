@@ -1,4 +1,4 @@
-use('e-comerse')
+use('e_comerse')
 
 db.orders.drop()
 
@@ -6,36 +6,16 @@ db.createCollection('orders', {
     validator: {
         $jsonSchema: {
             bsonType: 'object',
-            required: ['user', 'product'],
+            required: ['id_user', 'id_products'],
             properties:{
-                user: {
-                    bsonType: 'object',
-                    required: ['name'],
-                    properties: {
-                        id_user:{
-                            bsonType: 'string'
-                        },
-                        name: {
-                            bsonType: 'string'
-                        }
-                    }
+                id_user:{
+                    bsonType: 'objectId'
                 },
-                product: {
-                    bsonType: 'object',
-                    required: ['name'],
-                    properties: {
-                        id_product:{
-                            bsonType: 'string'
-                        },
-                        name: {
-                            bsonType: 'string'
-                        },
-                        price: {
-                            bsonType: 'double'
-                        },
-                        cantidad: {
-                            bsonType: 'int'
-                        }
+                id_products: {
+                    bsonType: 'array',
+                    minItems: 1,
+                    items: {
+                        bsonType: 'objectId'
                     }
                 }
             }

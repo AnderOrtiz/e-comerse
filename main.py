@@ -1,11 +1,18 @@
 from fastapi import FastAPI
-
+from db.models.user import User
+from db.schemas.user import user_schemas, users_schemas
+from db.client import db_client
 app = FastAPI()
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+
+
+@app.get("/", response_model=list[User])
+async def all_user():
+    return users_schemas(db_client.users.find())
+
+
+
 
 #https://fastapi.tiangolo.com/
 
