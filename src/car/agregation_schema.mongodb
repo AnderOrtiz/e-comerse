@@ -1,26 +1,20 @@
-src/product/products_collection.mongodbuse('e-comerse')
+use('e-comerse')
 
-db.products.drop()
-
-db.createCollection('products', {
-    validator: {
-        $jsonSchema: {
-            bsonType: 'object',
-            required: ['name', 'price'],
-            properties:{
-                name: {
-                    bsonType: 'string'
-                },
-                price: {
-                    bsonType: 'double',
-                },
-                detail: {
-                    bsonType: 'string'
-                },
-                car: {
-                    bsonType: 'bool',
-                }
-            }
+db.orders.aggregate([
+    {
+        $lookup: {
+            from: 'users',
+            localField: 'id_user',
+            foreignField: '_id',
+            as: 'user'
+        }
+    },
+    {
+        $lookup: {
+            from: 'products',
+            localField: 'id_products',
+            foreignField: '_id',
+            as: 'products'
         }
     }
-})
+])
