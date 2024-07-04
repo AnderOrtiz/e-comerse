@@ -9,18 +9,12 @@ db.orders.aggregate([
             as: 'user'
         }
     },
-    { $unwind: "$user" },
     {
         $lookup: {
             from: 'products',
             localField: 'id_products',
             foreignField: '_id',
             as: 'products'
-        }
-    },
-    {
-        $match: {
-            "products.car": false
         }
     },
     {

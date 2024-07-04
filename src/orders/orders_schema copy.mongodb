@@ -12,7 +12,11 @@ db.createCollection('orders', {
                     bsonType: 'objectId'
                 },
                 id_products: {
-                    bsonType: 'array'
+                    bsonType: 'array',
+                    minItems: 1,
+                    items: {
+                        bsonType: 'objectId'
+                    }
                 }
             }
         }
