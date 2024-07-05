@@ -7,6 +7,13 @@ class User(BaseModel):
     name: str
     last_name: str
     email: str
+
+
+class UserPrivet(User):
+    id: Optional[str] = None
+    name: str
+    last_name: str
+    email: str
     password: str
     gender: str
     age: int

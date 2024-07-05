@@ -1,15 +1,12 @@
-from fastapi import FastAPI
-from db.models.user import User
-from db.schemas.user import user_schemas, users_schemas
-from db.client import db_client
+from fastapi import FastAPI, APIRouter
+from routers import user
+
+
 app = FastAPI()
 
+app.include_router(user.router)
 
 
-
-@app.get("/", response_model=list[User])
-async def all_user():
-    return users_schemas(db_client.users.find())
 
 
 
