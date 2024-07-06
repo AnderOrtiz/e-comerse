@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from db.models.user import User, UserPrivet
+from db.models.user import User, UserInfo ,UserPrivet, PasswordUpdateRequest
 from db.schemas.user import user_schemas, users_schemas
 from db.client import db_client
 from bson import ObjectId   
@@ -39,7 +39,7 @@ async def create_user(user:UserPrivet):
 
 
 @router.put("/", status_code=status.HTTP_200_OK, response_model=User)
-async def updateuser(user: UserPrivet):
+async def update_user(user: UserInfo):
 
     user_dict = dict(user)
     del user_dict["id"]
@@ -52,6 +52,18 @@ async def updateuser(user: UserPrivet):
         return {"erro": "No se ha actualizado el user"}
 
     return search_user("_id", ObjectId(user.id))
+
+
+@router.put("/password", status_code=status.HTTP_200_OK)
+async def update_password(id: str, password: str):
+    try:
+        db_client.users.update_one(
+            {"_id": ObjectId(id)}, {"$set": {"password": password}})
+    except Exception as e:
+        return {"error": "No se ha actualizado el user", "detail": str(e)}
+    
+    return search_user("_id", ObjectId(id))
+
 
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)

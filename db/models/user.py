@@ -9,11 +9,10 @@ class User(BaseModel):
     email: str
 
 
-class UserPrivet(User):
-    id: Optional[str] = None
-    name: str
-    last_name: str
-    email: str
-    password: str
+class UserInfo(User):
     gender: str
     age: int
+
+
+class UserPrivet(UserInfo):
+    password: str
