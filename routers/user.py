@@ -39,7 +39,7 @@ async def create_user(user:UserPrivet):
 
 
 @router.put("/", status_code=status.HTTP_200_OK, response_model=User)
-async def update_user(user: UserPrivet):
+async def updateuser(user: UserPrivet):
 
     user_dict = dict(user)
     del user_dict["id"]
