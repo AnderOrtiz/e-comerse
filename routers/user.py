@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from db.models.user import User, UserInfo ,UserPrivet, PasswordUpdateRequest
+from db.models.user import User, UserInfo ,UserPrivet
 from db.schemas.user import user_schemas, users_schemas
 from db.client import db_client
 from bson import ObjectId   
