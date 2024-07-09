@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import user, product, auth
+from routers import user, product, auth,car
 
 
 app = FastAPI()
@@ -7,6 +7,7 @@ app = FastAPI()
 app.include_router(user.router)
 app.include_router(product.router)
 app.include_router(auth.router)
+app.include_router(car.router)
 
 @app.get("/", tags=["Home"])
 def read_root():
