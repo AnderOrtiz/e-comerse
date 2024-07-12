@@ -10,3 +10,15 @@ def convert_objectid(data):
         return str(data)
     else:
         return data
+
+
+def order_schemas(order) -> dict:
+    return {"id": order["_id"],
+            "id_user": order["id_user"],
+            "id_products": order["id_products"]
+            }
+
+
+
+def orders_schemas(orders) -> list:
+    return [order_schemas(order) for order in orders]

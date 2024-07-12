@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 from db.schemas.order import convert_objectid
 from db.client import db_client
+from bson import ObjectId
 
 router = APIRouter(
     prefix="/car",
@@ -9,8 +10,7 @@ router = APIRouter(
 )
 
 
-
-@router.get("/")
+@router.get("/", responses={status.HTTP_302_FOUND: {"message": "No encontrado"}})
 async def car():
     pipeline = [
         {
@@ -32,7 +32,7 @@ async def car():
         },
         {
             "$match": {
-                "products.car": False,
+                "products.car": True,
             }
         },
         {
@@ -50,4 +50,15 @@ async def car():
         converted_results = convert_objectid(results_list)  # Convert ObjectId to string
         return converted_results
     except Exception as e:
-        return {"result": str(e)}
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail= {"result": str(e)})
+
+
+@router.put("/")
+async def add_to_car(id: str, car: bool):
+    try:
+        db_client.products.update_one(
+            {"_id": ObjectId(id)}, {"$set": {"car": car}})
+    except Exception as e:
+        return {"error": "No se ha actualizado el user", "detail": str(e)}
+
+    return convert_objectid(db_client.orders.find_one({"_id": id}))
