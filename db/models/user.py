@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 
 class User(BaseModel):
@@ -15,4 +15,5 @@ class UserInfo(User):
 
 
 class UserPrivet(UserInfo):
+    car: Optional[List[str]] = None
     password: str

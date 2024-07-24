@@ -3,6 +3,5 @@ use('e_comerse')
 db.products.insertOne({
     name:'wallet',
     price: Double(23.00),
-    detail:'Color black for man',
-    car: false
+    detail:'Color black for man'
 })

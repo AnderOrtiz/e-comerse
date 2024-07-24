@@ -30,6 +30,12 @@ db.createCollection('users', {
                     bsonType: 'number',
                     minimum: 18,
                     maximum: 99
+                },
+                car: {
+                        bsonType: 'array',
+                        items: {
+                            bsonType: 'objectId'
+                        }
                 }
             }
         }

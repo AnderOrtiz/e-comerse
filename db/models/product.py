@@ -7,7 +7,6 @@ class Product(BaseModel):
     name: str
     price: float
     detail: str
-    car: bool
 
 
 

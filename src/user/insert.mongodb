@@ -6,6 +6,43 @@ db.users.insertOne({
     email:'ander@gmail.com',
     password: '12345678',
     gender: 'Male',
-    age: 18
+    age: 18,
+    car: [
+        ObjectId('669450c1abc1c00b542e8604')
+    ]
 })
 
+[
+    {
+      "id": "668c6cf258c55a452488c509",
+      "name": "Brenner",
+      "last_name": "Ortiz",
+      "email": "brenner@gmail.com",
+      "gender": "Male",
+      "age": 22,
+      "car":[
+        ObjectId("669450c1abc1c00b542e8604")
+      ],
+      "password": "$2a$12$ZJsGz3./fomBAlmkx5LH0.10ntYDFQGHaQyq3F37Z44law2VBkvLy"
+    },
+    {
+      "id": "668c6d282e5ecde947084f75",
+      "name": "Sheikah",
+      "last_name": "Ortiz",
+      "email": "sheikah@gmail.com",
+      "gender": "Male",
+      "age": 28,
+      "car":[
+        ObjectId("669450c1abc1c00b542e8604")
+      ],
+      "password": "$2a$12$bo4h3SPOAS0iLiRgILeqX.f0yINpkRtmWuMAaU8dWqdNP.mbnuxZ2"
+    },
+    {
+      "id": "66a027d77fbf08e45a8ce9ae",
+      "name": "Jhon",
+      "last_name": "Smith",
+      "email": "john@gmail.com",
+      "gender": "Male",
+      "age": 40,
+    }
+  ]

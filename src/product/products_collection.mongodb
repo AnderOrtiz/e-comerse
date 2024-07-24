@@ -16,9 +16,6 @@ db.createCollection('products', {
                 },
                 detail: {
                     bsonType: 'string'
-                },
-                car: {
-                    bsonType: 'bool',
                 }
             }
         }

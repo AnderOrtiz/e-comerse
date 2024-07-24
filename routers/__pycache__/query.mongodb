@@ -1,0 +1,10 @@
+db.users.updateOne(
+    // query, damos el id    
+    {_id: 2},
+    // change => operators
+    {
+        $set: {
+            name: 'changed name',
+        }
+    }
+)

@@ -11,7 +11,7 @@ router = APIRouter(
 
 
 @router.get("/", responses={status.HTTP_302_FOUND: {"message": "No encontrado"}})
-async def car():
+async def car(id:str):
     pipeline = [
         {
             "$lookup": {
@@ -29,9 +29,10 @@ async def car():
                 "foreignField": "_id",
                 "as": "products",
             }
-        },
+        },#668c6cf258c55a452488c509
         {
             "$match": {
+                "user._id" : ObjectId(id),
                 "products.car": True,
             }
         },
@@ -39,7 +40,8 @@ async def car():
             "$project": {
                 "_id": 0,
                 "user": "$user",
-                "products": "$products"
+                "products": "$products",
+                "total": {"$sum": "$products.price" }
             }
         }
     ]
