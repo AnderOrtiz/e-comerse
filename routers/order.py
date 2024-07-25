@@ -37,7 +37,8 @@ async def all_orders():
             "$project": {
                 "_id": 0,
                 "user": "$user",
-                "products": "$products"
+                "products": "$products",
+                "total": {"$sum": "$products.price" }
             }
         }
     ]

@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from db.models.user import User, UserPrivet
 from db.schemas.user import user_schemas, users_schemas
 from db.client import db_client
-from pydantic import BaseModel
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import jwt, JWTError
 from passlib.context import CryptContext

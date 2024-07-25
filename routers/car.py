@@ -11,35 +11,26 @@ router = APIRouter(
 
 
 @router.get("/", responses={status.HTTP_302_FOUND: {"message": "No encontrado"}})
-async def car(id:str):
+async def car(id: str):
     pipeline = [
         {
-            "$lookup": {
-                "from": "users",
-                "localField": "id_user",
-                "foreignField": "_id",
-                "as": "user",
-            }
+            "$match": {"_id": ObjectId(id)}
         },
-        {"$unwind": "$user"},
         {
             "$lookup": {
                 "from": "products",
-                "localField": "id_products",
+                "localField": "car",
                 "foreignField": "_id",
                 "as": "products",
-            }
-        },#668c6cf258c55a452488c509
-        {
-            "$match": {
-                "user._id" : ObjectId(id),
-                "products.car": True,
             }
         },
         {
             "$project": {
                 "_id": 0,
-                "user": "$user",
+                "name": {"$concat": ["$name", " ", "$last_name"]},
+                "email": "$email",
+                "gender": "$gender",
+                "age": "$age",
                 "products": "$products",
                 "total": {"$sum": "$products.price" }
             }
@@ -47,7 +38,7 @@ async def car(id:str):
     ]
 
     try:
-        results = db_client.orders.aggregate(pipeline)
+        results = db_client.users.aggregate(pipeline)
         results_list = list(results)  # Convert cursor to list
         converted_results = convert_objectid(results_list)  # Convert ObjectId to string
         return converted_results
@@ -55,12 +46,26 @@ async def car(id:str):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail= {"result": str(e)})
 
 
-@router.put("/")
-async def add_to_car(id: str, car: bool):
+@router.put("/add")
+async def add_to_car(id: str, car: str):
     try:
-        db_client.products.update_one(
-            {"_id": ObjectId(id)}, {"$set": {"car": car}})
+        db_client.users.update_one(
+            {"_id": ObjectId(id)}, {"$push": {"car": ObjectId(car)}})
     except Exception as e:
         return {"error": "No se ha actualizado el user", "detail": str(e)}
 
-    return convert_objectid(db_client.orders.find_one({"_id": id}))
+    return convert_objectid(db_client.users.find_one({"_id": ObjectId(id)}))
+
+
+@router.put("/remove")
+async def remove_to_car(id: str, car: str):
+    try:
+        db_client.users.update_one(
+            {"_id": ObjectId(id)}, {"$pull": {"car": ObjectId(car)}})
+    except Exception as e:
+        return {"error": "No se ha actualizado el user", "detail": str(e)}
+
+    return convert_objectid(db_client.users.find_one({"_id": ObjectId(id)}))
+
+#66945917fc1a7e13e5ee431f
+#669451cc78cca06840498ff4
