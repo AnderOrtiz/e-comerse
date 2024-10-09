@@ -25,19 +25,24 @@ async def user(id: str):
 
 @router.post("/", response_model=User, status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserPrivet):
-    existing_user = db_client.users.find_one({"email": user.email })
-    if isinstance(existing_user, UserPrivet):
-        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
-                            detail=f"El usuario {user.name} ya existe")
-
     user_dict = dict(user)
-    del user_dict["id"]
+    
+    # Validar el género
+    valid_genders = ['F', 'M', 'Male', 'Female']
+    if user_dict['gender'] not in valid_genders:
+        raise HTTPException(status_code=400, detail="Invalid gender value")
 
-    id = db_client.users.insert_one(user_dict).inserted_id
+    # Manejar el campo car
+    if user_dict['car'] is None:  # Si car es None, asignar una lista vacía
+        user_dict['car'] = []
 
-    new_user = convert_objectid(db_client.users.find_one({"_id": id}))
-
-    return User(**new_user)
+    # Insertar el usuario en la base de datos
+    try:
+        inserted_id = db_client.users.insert_one(user_dict).inserted_id
+        user_dict['id'] = str(inserted_id)  # Añadir el ID insertado
+        return user_dict  # Retornar el diccionario del usuario, incluyendo el ID
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.put("/", status_code=status.HTTP_200_OK, response_model=User)
