@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
 
             if (response.ok) {
-                document.getElementById('response').innerText = `User created: ${result.name}`;
+                document.getElementById('response').innerText = `Usuario ${result.name} creado exitosamente`;
+                alert(`Usuario ${result.name} creado exitosamente`)
             } else {
                 document.getElementById('response').innerText = `Error: ${result.detail}`;
             }
